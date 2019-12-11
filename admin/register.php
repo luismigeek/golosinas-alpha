@@ -20,6 +20,8 @@
 
 <body class="bg-dark">
 
+  <?php require_once "../includes/navLogin.php";?>
+
   <div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>

@@ -31,7 +31,7 @@ if (!empty($_POST)) {
     $error = '';
 
     $sql = "SELECT USAU_ID, USAU_USTI_ID FROM USER_AUTH WHERE USAU_EMAIL = '$email' AND USAU_PASSWORD = '$passw'";
-    $result = $db->getConexion()->query($sql);
+    $result = $db->getConex()->query($sql);
     $rows = $result->num_rows;
 
     if ($rows > 0) {
@@ -65,6 +65,8 @@ if (!empty($_POST)) {
 
 <body class="bg-dark">
 
+  <?php require_once "../includes/navLogin.php";?>
+
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
@@ -88,9 +90,8 @@ if (!empty($_POST)) {
           <a class="d-block small mt-3" href="register.php">Registrar una cuenta</a>
         </div>
         <div class="text-danger text-center">
-            <?php echo isset($error) ? utf8_decode($error) : ''; ?>
+            <?php echo isset($error) ? $error : ''; ?>
         </div>
-
       </div>
     </div>
   </div>

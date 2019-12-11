@@ -86,19 +86,19 @@ require_once '../includes/sidebar.php'
                     <th>ORIGEN</th>
                     <th>SUCURSAL</th>
                     <th>TELEFONO</th>
-                    <th>URL</th>
+                    <th>SITIO WEB</th>
                     <th colspan = "2"  class="text-center" >ACCIONES</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($proveedores as $proveedor) { ?>
+                <?php foreach ($proveedores as $proveedor) {?>
                   <tr>
                     <td> <?php echo $proveedor['PR_ID'] ?> </td>
                     <td> <?php echo $proveedor['PR_NOMBRE'] ?> </td>
                     <td> <?php echo $proveedor['PR_ORIGEN'] ?> </td>
                     <td> <?php echo $proveedor['PR_SUCURSAL'] ?> </td>
                     <td> <?php echo $proveedor['PR_TELEFONO'] ?> </td>
-                    <td> <?php echo ($proveedor['PR_URL'] !== null) ? $proveedor['PR_URL'] : "No especifica"; ?> </td>
+                    <td> <?php echo ($proveedor['PR_URL'] != null) ? '<a href="'.$proveedor["PR_URL"].'" target="_blank" rel="noopener noreferrer">Visitar</a>' : "No especifica" ?> </td>
                     <td class="text-center">
                       <a class="btn btn-warning" href="proveedor/update.php?id=<?php echo $proveedor['PR_ID']?>">Editar</a>
                     </td>
@@ -109,7 +109,6 @@ require_once '../includes/sidebar.php'
                 <?php }?>
                 </tbody>
               </table>
-
 
                 <?php
               }else {

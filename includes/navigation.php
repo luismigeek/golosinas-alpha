@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
   <a class="navbar-brand mr-1" href="index.php">
-    <img src="http://placehold.it/50x50?text=Logo" alt="">
+  <img src="../includes/logo_tienda.jpg" width="50px" height="50px" alt="">
     Gologinas Alpha
   </a>
 

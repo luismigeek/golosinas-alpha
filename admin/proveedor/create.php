@@ -15,7 +15,12 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
 
 if (!empty($_POST)) {
     if ($db->conectar()) {
-        $db->createProveedor($_POST);
+        
+        if($db->createProveedor($_POST) == 1){
+            $mensaje = "Proveedor insertado correctamente.";
+        }else {
+            $error = "Lo sentimos, este sitio web está experimentando problemas.";
+        }
     }
 }
 ?>
@@ -33,28 +38,28 @@ if (!empty($_POST)) {
                     <div class="form-group row">
                         <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nombre" name="nombre">
+                        <input type="text" class="form-control" id="nombre" required name="nombre">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="origen" class="col-sm-2 col-form-label">Origen</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="origen" name="origen" placeholder="Local o extrangero">
+                        <input type="text" class="form-control" id="origen" required name="origen" placeholder="Local o extrangero">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="sucursal" class="col-sm-2 col-form-label">Sucursal</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="sucursal" name="sucursal">
+                        <input type="text" class="form-control" id="sucursal" required name="sucursal">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="telefono" class="col-sm-2 col-form-label">Telefon</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="telefono" name="telefono">
+                        <input type="text" class="form-control" id="telefono" required name="telefono">
                         </div>
                     </div>
 
@@ -68,6 +73,12 @@ if (!empty($_POST)) {
                     <input type="submit" class="btn btn-info float-right" value="Registrar">
                     <a href="../proveedores.php" class="btn btn-secondary float-left">Volver</a>
                 </form>
+                <div class="text-success text-center">
+                    <?php echo isset($mensaje) ? $mensaje : ''; ?>
+                </div>
+                <div class="text-danger text-center">
+                    <?php echo isset($error) ? $error : ''; ?>
+                </div>
             </div>
         </div>
 
