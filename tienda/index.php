@@ -24,7 +24,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
 
-      <a class="navbar-brand" href="#">Tienda Online</a>
+      <a class="navbar-brand" href="#">Golosinas ALPHA</a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,8 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">Golosinas Alpha</h1>
+        <img src="../includes/logo_tienda.jpg" width="250" height="250"  alt="">
+
         <div class="list-group">
           <a href="#" class="list-group-item">Category 1</a>
           <a href="#" class="list-group-item">Category 2</a>

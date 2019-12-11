@@ -6,8 +6,6 @@ class Conexion
 {
 
     protected $conex;
-    protected $db;
-    protected $dbh;
 
     /**
      * Metodo para crear una conexión con la base de datos, retorna TRUE si esta es exitosa
@@ -66,7 +64,7 @@ class Conexion
      *
      * @method readProveedores() obtiene una lista de con todos los proveedores
      *
-     * @method updateProveedor(data[]) modifca un registro de la tabla Proveedor y
+     * @method updateProveedor(data[]) modifica un registro de la tabla Proveedor y los
      * datos a modificar los recibe por parametro en un array
      *
      * @method deleteProveedor(id) Elimina un registro en la tabla Proveedor,
@@ -201,8 +199,104 @@ class Conexion
 
  
     /**********************/
-    /* CRUD presentaciones*/
+    /* CRUD categorias*/
     /**********************/
 
+    public function createCategoria($data = [])
+    {
+        if (count($data) > 0) {
+            $sql = "INSERT INTO GO_CATEGORIAS (GOCA_ID, GOCA_DESC)
+                VALUES (NULL, '" . $data['nombre'] . "')";
+
+            if (!$resultado = $this->conex->query($sql)) {
+
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+
+                // Cómo obtener información del error
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "<br>";
+                echo "Errno: " . $this->conex->errno . "<br>";
+                echo "Error: " . $this->conex->error . "<br>";
+                exit;
+            } else {
+                return $resultado;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public function readCategorias()
+    {
+        // Realizar una consulta SQL
+        $sql = "SELECT * FROM GO_CATEGORIAS";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+        }
+
+        if ($resultado->num_rows === 0) {
+            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
+            exit;
+        }
+
+        $categorias = array();
+        while ($categoria = $resultado->fetch_array(MYSQLI_ASSOC)) {
+            array_push($categorias, $categoria);
+        }
+        $resultado->free();
+        return $categorias;
+    }
  
+    public function updateCategoria($data = [])
+    {
+
+        // Verifica que el array no esté vacio
+        if (count($data) > 0) {
+
+            $sql = "UPDATE
+                    GO_CATEGORIAS
+                SET
+                    GOCA_DESC = '" . $data['e_nombre'] . "'
+                WHERE GOCA_ID = " . $data['id'];
+
+            if (!$resultado = $this->conex->query($sql)) {
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+
+                // Como obtener información del error
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "<br>";
+                echo "Errno: " . $this->conex->errno . "<br>";
+                echo "Error: " . $this->conex->error . "<br>";
+                exit;
+            } else {
+                return $resultado;
+            }
+
+        } else {
+            return 0;
+        }
+    }
+
+    public function deleteCategoria($id)
+    {
+        $sql = "DELETE FROM GO_CATEGORIAS WHERE GOCA_ID = $id";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+
+            // Como obtener información del error
+            echo "Error: La ejecución de la consulta falló debido a: \n";
+            echo "Query: " . $sql . "<br>";
+            echo "Errno: " . $this->conex->errno . "<br>";
+            echo "Error: " . $this->conex->error . "<br>";
+            exit;
+        } else {
+            return $resultado;
+        }
+
+    }
+
 }
