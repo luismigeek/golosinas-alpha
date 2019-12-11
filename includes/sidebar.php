@@ -14,10 +14,10 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
       <h6 class="dropdown-header">Gestionar golosinas</h6>
-      <a class="dropdown-item" href="blank.php">Ver golosinas</a>
-      <a class="dropdown-item" href="blank.php">Ver proveedores</a>
-      <a class="dropdown-item" href="blank.php">Ver presentaciones</a>
-      <a class="dropdown-item" href="blank.php">Ver categorias</a>
+      <a class="dropdown-item" href="golosinas.php">Ver golosinas</a>
+      <a class="dropdown-item" href="proveedores.php">Ver proveedores</a>
+      <a class="dropdown-item" href="presentaciones.php">Ver presentaciones</a>
+      <a class="dropdown-item" href="categorias.php">Ver categorias</a>
       <div class="dropdown-divider"></div>
       <h6 class="dropdown-header">Compras</h6>
       <a class="dropdown-item" href="blank.php">Ver pedidos</a>

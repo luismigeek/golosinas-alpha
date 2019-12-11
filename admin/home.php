@@ -1,3 +1,20 @@
+<?php
+
+require_once "../includes/db/database.php";
+$db = new Conexion();
+
+session_start();
+
+/**
+ * Si no hay una variable de sesion llamada "type" es porque no hay sesion iniciada,
+ * Si esta existe y es diferente de 1, entonces es necesario redireccionar al login
+ */
+if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
+    header("Location: index.php");
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,40 +46,6 @@
 
       <div class="container-fluid">
 
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Tabla de ejemplo</div>
-          <div class="card-body">
-            <div class="table-responsive">
-
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Olivia Liang</td>
-                    <td>Support Engineer</td>
-                    <td>Singapore</td>
-                    <td>64</td>
-                    <td>2011/02/03</td>
-                    <td>$234,500</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
 
       </div>
       <!-- /.container-fluid -->

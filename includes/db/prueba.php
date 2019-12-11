@@ -30,6 +30,7 @@ if ($db->conectar()) {
 </tbody>
 </table>
 
- <?php  $db->desconectar(); }
+ <?php  $db->desconectar(); 
+ }
 
 ?>

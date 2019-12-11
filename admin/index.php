@@ -30,9 +30,6 @@ if (!empty($_POST)) {
     $passw = (isset($_POST['inputPassword'])) ? $_POST['inputPassword'] : null ;
     $error = '';
 
-    echo $email;
-    echo $passw;
-
     $sql = "SELECT USAU_ID, USAU_USTI_ID FROM USER_AUTH WHERE USAU_EMAIL = '$email' AND USAU_PASSWORD = '$passw'";
     $result = $db->getConexion()->query($sql);
     $rows = $result->num_rows;
@@ -52,7 +49,7 @@ if (!empty($_POST)) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,7 +69,7 @@ if (!empty($_POST)) {
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
       <div class="card-body">
-        <form action="<?php $_SERVER['PHP_SELF'];?>" method="post">
+        <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
           <div class="form-group">
             <div class="form-label-group">
               <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
@@ -90,7 +87,7 @@ if (!empty($_POST)) {
         <div class="text-center">
           <a class="d-block small mt-3" href="register.php">Registrar una cuenta</a>
         </div>
-        <div class="text-danger">
+        <div class="text-danger text-center">
             <?php echo isset($error) ? utf8_decode($error) : ''; ?>
         </div>
 
