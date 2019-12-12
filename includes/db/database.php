@@ -394,4 +394,162 @@ class Conexion
 
     }
 
+    /**
+     * INSERT INTO GOLOSINA (GO_ID, GO_DESC, GO_PRECIO, GO_STOCK, GO_GOPR_ID, GO_GOCA_ID, GO_GOPRE_ID) VALUES (NULL, 'C', '5755', '6455', '19', '11', '4');
+     * SELECT GO.GO_ID AS "ID", GO.GO_DESC AS "DESC", GO.GO_PRECIO AS "PRECIO", GO.GO_STOCK AS "STOCK", CONCAT( GOPR.PR_NOMBRE, ' - ', GOPR.PR_SUCURSAL) AS "PROVEEDOR", GOPRE.GOPRE_DESC AS "PRESENTACION", GOCA.GOCA_DESC AS "CATEGORIA" FROM GOLOSINA GO INNER JOIN GO_PROVEEDOR GOPR ON GO.GO_GOPR_ID = GOPR.PR_ID INNER JOIN GO_CATEGORIAS GOCA ON GO.GO_GOCA_ID = GOCA.GOCA_ID INNER JOIN GO_PRESENTACIONES GOPRE ON GO.GO_GOPRE_ID = GOPRE.GOPRE_ID
+     */
+
+    public function createGolosina($data = [])
+    {
+        if (count($data) > 0) {
+            $sql = "INSERT INTO GOLOSINA 
+                        (GO_ID, GO_DESC, GO_PRECIO, GO_STOCK, GO_GOPR_ID, GO_GOCA_ID, GO_GOPRE_ID) 
+                    VALUES 
+                        (NULL, '".$data['desc']."', ".$data['precio'].", ".$data['stock'].", ".$data['id_proveedor'].", ".$data['id_categoria'].", ".$data['id_presentacion'].")";
+
+            if (!$resultado = $this->conex->query($sql)) {
+                return null;
+            } else {
+                return $resultado;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public function readGolosinas()
+    {
+        // Realizar una consulta SQL
+        $sql = 'SELECT 
+                    GO.GO_ID AS "ID",
+                    GO.GO_DESC AS "DESC", 
+                    GO.GO_PRECIO AS "PRECIO", 
+                    GO.GO_STOCK AS "STOCK", 
+                    CONCAT( GOPR.PR_NOMBRE, " - ", GOPR.PR_SUCURSAL) AS "PROVEEDOR", 
+                    GOPRE.GOPRE_DESC AS "PRESENTACION", 
+                    GOCA.GOCA_DESC AS "CATEGORIA" 
+                FROM 
+                    GOLOSINA GO 
+                    INNER JOIN GO_PROVEEDOR GOPR ON GO.GO_GOPR_ID = GOPR.PR_ID 
+                    INNER JOIN GO_CATEGORIAS GOCA ON GO.GO_GOCA_ID = GOCA.GOCA_ID 
+                    INNER JOIN GO_PRESENTACIONES GOPRE ON GO.GO_GOPRE_ID = GOPRE.GOPRE_ID';
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+        }
+
+        if ($resultado->num_rows != 0) {
+            $golosinas = array();
+            while ($golosina = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($golosinas, $golosina);
+            }
+            $resultado->free();
+            return $golosinas;
+        } else {
+            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
+        }
+    }
+
+    public function updateGolosina($data = [])
+    {
+
+        // Verifica que el array no esté vacio
+        /**
+         * 
+         */
+        if (count($data) > 0) {
+
+            $sql = "UPDATE 
+                        GOLOSINA 
+                    SET 
+                        GO_DESC='".$data['desc']."',
+                        GO_PRECIO=".$data['precio'].",
+                        GO_STOCK=".$data['stock'].",
+                        GO_GOCA_ID=".$data['id_categoria'].",
+                        GO_GOPRE_ID=".$data['id_presentacion'].",
+                        GO_GOPR_ID=".$data['id_proveedor']."
+                    WHERE GO_ID=".$data['id'];
+
+            if (!$resultado = $this->conex->query($sql)) {
+                return null;
+            } else {
+                return $resultado;
+            }
+
+        } else {
+            return 0;
+        }
+    }
+
+    public function deleteGolosina($id)
+    {
+        $sql = "DELETE FROM GOLOSINA WHERE GO_ID = $id";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+
+            // Como obtener información del error
+            echo "Error: La ejecución de la consulta falló debido a: \n";
+            echo "Query: " . $sql . "<br>";
+            echo "Errno: " . $this->conex->errno . "<br>";
+            echo "Error: " . $this->conex->error . "<br>";
+            exit;
+        } else {
+            return $resultado;
+        }
+
+    }
+
+
+    /**
+     * SELECT PE.PE_ID AS ID, PE.PE_FECHA AS FECHA, CONCAT (US.US_NOMBRE, ' ', US.US_APELLIDO) AS CLIENTE, CONCAT (EM.EM_NOMBRE, ' ', EM.EM_APELLIDO) AS REPARTIDOR, SUM(GO.GO_PRECIO) AS VALOR FROM PEDIDO PE INNER JOIN USUARIO US ON PE.PE_US_ID = US.US_ID INNER JOIN EMPLEADO EM ON PE.PE_EM_ID = EM.EM_ID INNER JOIN DETALLE_PEDIDO DP ON PE.PE_ID = DP.DEPE_PE_ID INNER JOIN GOLOSINA GO ON DP.DEPE_GO_ID = GO.GO_ID
+     */
+    
+    public function listarPedidos()
+    {
+        // Realizar una consulta SQL
+        $sql = "SELECT PE.PE_ID AS ID, PE.PE_FECHA AS FECHA, CONCAT( US.US_NOMBRE, ' ', US.US_APELLIDO ) AS CLIENTE, CONCAT( EM.EM_NOMBRE, ' ', EM.EM_APELLIDO ) AS REPARTIDOR, SUM(GO.GO_PRECIO*DP.DEPE_CANTIDAD) AS VALOR FROM PEDIDO PE INNER JOIN USUARIO US ON PE.PE_US_ID = US.US_ID INNER JOIN EMPLEADO EM ON PE.PE_EM_ID = EM.EM_ID INNER JOIN DETALLE_PEDIDO DP ON PE.PE_ID = DP.DEPE_PE_ID INNER JOIN GOLOSINA GO ON DP.DEPE_GO_ID = GO.GO_ID";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+        }
+
+        if ($resultado->num_rows != 0) {
+            $pedidos = array();
+            while ($pedido = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($pedidos, $pedido);
+            }
+            $resultado->free();
+            return $pedidos;
+        } else {
+            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron pedidos.</h3>';
+        }
+    }
+
+    public function lomascomprado()
+    {
+        // Realizar una consulta SQL
+        $sql = "SELECT GO.GO_DESC AS CANDY, SUM(DP.DEPE_CANTIDAD) AS VENTAS, SUM(GO.GO_PRECIO * DP.DEPE_CANTIDAD) AS RECAUDO FROM PEDIDO PE INNER JOIN DETALLE_PEDIDO DP ON PE.PE_ID = DP.DEPE_PE_ID INNER JOIN GOLOSINA GO ON DP.DEPE_GO_ID = GO.GO_ID GROUP BY CANDY ORDER BY VENTAS DESC";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+        }
+
+        if ($resultado->num_rows != 0) {
+            $lomas = array();
+            while ($row = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($lomas, $row);
+            }
+            $resultado->free();
+            return $lomas;
+        } else {
+            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron pedidos.</h3>';
+        }
+    }
+    
+
 }

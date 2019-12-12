@@ -18,10 +18,6 @@
       <a class="dropdown-item" href="proveedores.php">Ver proveedores</a>
       <a class="dropdown-item" href="presentaciones.php">Ver presentaciones</a>
       <a class="dropdown-item" href="categorias.php">Ver categorias</a>
-      <div class="dropdown-divider"></div>
-      <h6 class="dropdown-header">Compras</h6>
-      <a class="dropdown-item" href="blank.php">Ver pedidos</a>
-      <a class="dropdown-item" href="blank.php">Ver historial</a>
     </div>
   </li>
   <li class="nav-item dropdown">
@@ -31,11 +27,7 @@
       <span>Tendencias</span>
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-      <h6 class="dropdown-header">Reporte semanal</h6>
-      <a class="dropdown-item" href="blank.php">Lo más comprado</a>
-      <div class="dropdown-divider"></div>
-      <h6 class="dropdown-header">Reporte mensual</h6>
-      <a class="dropdown-item" href="blank.php">Lo más comprado</a>
+      <a class="dropdown-item" href="lomascomprado.php">Lo más vendido</a>
     </div>
   </li>
 </ul>

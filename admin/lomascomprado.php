@@ -21,7 +21,7 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>ADMINISTRADOR - DASHBOARD</title>
+  <title>ADMINISTRADOR - Lo más vendido</title>
 
   <!-- Custom fonts for this template-->
   <link href="../librerias/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,11 +46,10 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
 
       <div class="container-fluid">
 
-
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-            <h1 class="d-inline text-success">HISTORICO DE PEDIDOS </h1>
+            <h1 class="d-inline text-success">Lo más vendido </h1>
             </div>
           </div>
           <div class="card-body">
@@ -58,29 +57,24 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
 
             <?php 
                   if ($db->conectar()) {
-                    $pedidos = $db->listarPedidos();
-
+                    $pedidos = $db->lomascomprado();
                     if ($pedidos != null) {
             ?>
 
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>CODIGO</th>
-                    <th>FECHA</th>
-                    <th>VALOR PEDIDO</th>
-                    <th>CLIENTE</th>
-                    <th>REPARTIDOR</th>
+                    <th class="text-center">GOLOSINA</th>
+                    <th class="text-center">TODAL VENDIDO</th>
+                    <th class="text-center">VALOR TOTAL RECAUDO</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($pedidos as $pedido) {?>
                     <tr>
-                      <td> <?php echo $pedido['ID'] ?> </td>
-                      <td> <?php echo $pedido['FECHA'] ?> </td>
-                      <td> $ <?php echo $pedido['VALOR'] ?> </td>
-                      <td> <?php echo $pedido['CLIENTE'] ?> </td>
-                      <td> <?php echo $pedido['REPARTIDOR'] ?> </td>
+                      <td class="text-center"> <?php echo $pedido['CANDY'] ?> </td>
+                      <td class="text-center"> <?php echo $pedido['VENTAS'] ?> </td>
+                      <td class="text-center"> $ <?php echo $pedido['RECAUDO'] ?> </td>
                     </tr>
                     <?php }?>
                   <?php }?>

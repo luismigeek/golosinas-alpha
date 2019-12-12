@@ -57,21 +57,21 @@ if (!empty($_GET)) {
                     </div>
 
                     <div class="form-group row">
-                        <label for="origen" class="col-sm-2 col-form-label">ORIGEN</label>
+                        <label for="origen" class="col-sm-2 col-form-label">Origen</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" id="origen" required name="e_origen" value="<?php echo $row['PR_ORIGEN']?>">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="sucursal" class="col-sm-2 col-form-label">SUCURSAL</label>
+                        <label for="sucursal" class="col-sm-2 col-form-label">Sucursal</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" id="sucursal" required name="e_sucursal" value="<?php echo $row['PR_SUCURSAL']?>">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="telefono" class="col-sm-2 col-form-label">TELEFONO</label>
+                        <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" id="telefono" required name="e_telefono"value="<?php echo $row['PR_TELEFONO']?>">
                         </div>
