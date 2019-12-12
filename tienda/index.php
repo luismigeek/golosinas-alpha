@@ -1,13 +1,16 @@
+<?php
+
+require_once "../includes/db/database.php";
+$db = new Conexion();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>INICIO - GOLOSINAS ALPHA</title>
 
   <!-- Bootstrap core CSS -->
@@ -15,6 +18,16 @@
 
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
+
+  <style>
+
+    body{
+      background-image: url(../includes/fiesta.png) ;
+      background-repeat: repeat;
+      background-size: cover;
+    }
+
+  </style>
 
 </head>
 
@@ -33,17 +46,9 @@
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Opcion 1</a>
-          </li>
           <li class="nav-item">
               <a href="../admin" class="btn btn-info text-break">
-                <span></span>Administrador
+                <span></span>Iniciar administrador
               </a>
             </li>
           </ul>
@@ -60,10 +65,30 @@
 
         <img src="../includes/logo_tienda.jpg" width="250" height="250"  alt="">
 
+        <br>
+        <br>
+        <br>
+        <h4 class="text-success font-weight-bold">CATEGORIAS</h4>
+
         <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
+        <?php
+
+          if ($db->conectar()) {
+              $categorias = $db->readCategorias();
+
+
+              if ($categorias != null) {
+                  foreach ($categorias as $categoria) {
+
+                      ?>
+                    
+                      <a href="#" class="list-group-item"> <?php echo $categoria['GOCA_DESC'] ?></a>
+
+                  <?php
+                  }
+              }
+          }
+        ?>
         </div>
 
       </div>
@@ -98,133 +123,72 @@
           </a>
         </div>
 
+        <form action="shop.php" method="get">
         <div class="row">
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/candy,sweet?random=1" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item One</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                </p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+        <?php
+          if ($db->conectar()) {
+              $golosinas = $db->readGolosinas();
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/candy,sweet?random=2" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Two</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                  Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+              if ($golosinas != null) {
+        ?>
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/candy,sweet?random=3" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Three</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                </p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+        
+          <?php
+                  $i = 1;
+                  foreach ($golosinas as $golosina) {?>
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/candy,sweet?random=4" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Four</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                </p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                      <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/candy,sweet?random=<?php echo $i; ?>" alt=""></a>
+                        <div class="card-body">
+                          <h4 class="card-title">
+                            <a href="#"><?php echo $golosina['DESC'] ?> </a>
+                          </h4>
+                          <h5>Precio: $ <?php echo $golosina['PRECIO'] ?> </h5>
+                          <p class="card-text">
+                            <p class="d-inline" >Presentacion: </p> <p class="d-inline"> <?php echo $golosina['PRESENTACION'] ?> </p> <br>
+                            <p class="d-inline" > Categoria: </p> <p class="d-inline"> <?php echo $golosina['CATEGORIA'] ?> </p> <br>
+                          </p>
+                        </div>
+                        <div class="card-footer">
+                          <input type="number" name="<?php echo $golosina['ID'] ?>" placeholder="Cantidad a comprar">
+                        </div>
+                      </div>
+                    </div>
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/sweet,candy?random=5" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Five</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                  Lorem ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+          <?php $i++;}?>
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="https://loremflickr.com/720/400/sweet,candy?random=6" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Six</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                </p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
+            <?php }?>
+          <?php }?>
+
 
         </div>
         <!-- /.row -->
+        <div class="row">
+          <input type="submit" class="btn btn-success btn-lg mb-3 m-auto w-100" value="Pedir domicilio">
+        </div>
 
       </div>
       <!-- /.col-lg-9 -->
 
+      </form>
+
     </div>
     <!-- /.row -->
+
+
 
   </div>
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
+  <footer class="py-5 mt-4 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; Golosinas ALPHA 2019</p>
     </div>
     <!-- /.container -->
   </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="../librerias/jquery/jquery.min.js"></script>
-  <script src="../librerias/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

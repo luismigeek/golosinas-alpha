@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-12-2019 a las 09:13:15
+-- Tiempo de generación: 13-12-2019 a las 00:31:31
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.2.24
 
@@ -34,14 +34,6 @@ CREATE TABLE `DETALLE_PEDIDO` (
   `DEPE_CANTIDAD` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `DETALLE_PEDIDO`
---
-
-INSERT INTO `DETALLE_PEDIDO` (`DEPE_PE_ID`, `DEPE_GO_ID`, `DEPE_CANTIDAD`) VALUES
-(1, 9, 5),
-(1, 10, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -61,8 +53,8 @@ CREATE TABLE `EMPLEADO` (
 --
 
 INSERT INTO `EMPLEADO` (`EM_ID`, `EM_NOMBRE`, `EM_APELLIDO`, `EM_TELEFONO`, `EM_SALARIO`) VALUES
-(1, 'Empleado 1', 'Ape 1', '3166201947', 1500000),
-(2, 'Empleado 2', 'Ape 2', '3157651423', 1200000);
+(1, 'Ronaldo', 'Ortega', '3166201947', 1500000),
+(2, 'Messi', 'Orozco', '3157651423', 1200000);
 
 -- --------------------------------------------------------
 
@@ -80,14 +72,6 @@ CREATE TABLE `GOLOSINA` (
   `GO_GOPRE_ID` bigint(20) UNSIGNED NOT NULL COMMENT 'FK - Id de la presentación de la golosina'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `GOLOSINA`
---
-
-INSERT INTO `GOLOSINA` (`GO_ID`, `GO_DESC`, `GO_PRECIO`, `GO_STOCK`, `GO_GOPR_ID`, `GO_GOCA_ID`, `GO_GOPRE_ID`) VALUES
-(9, 'Mashmelow', 3000, 787, 19, 9, 3),
-(10, 'Jumbo Jet', 5000, 100, 19, 9, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -99,15 +83,6 @@ CREATE TABLE `GO_CATEGORIAS` (
   `GOCA_DESC` varchar(250) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción de la categoría'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tabla que contiene las categorías de las golosinas';
 
---
--- Volcado de datos para la tabla `GO_CATEGORIAS`
---
-
-INSERT INTO `GO_CATEGORIAS` (`GOCA_ID`, `GOCA_DESC`) VALUES
-(9, 'Confites'),
-(10, 'Chocolates'),
-(11, 'Caramelos');
-
 -- --------------------------------------------------------
 
 --
@@ -118,14 +93,6 @@ CREATE TABLE `GO_PRESENTACIONES` (
   `GOPRE_ID` bigint(20) UNSIGNED NOT NULL COMMENT 'PK - Identificador único',
   `GOPRE_DESC` varchar(250) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Descripción de la presentación '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tabla que contiene las presentaciones de las golosinas';
-
---
--- Volcado de datos para la tabla `GO_PRESENTACIONES`
---
-
-INSERT INTO `GO_PRESENTACIONES` (`GOPRE_ID`, `GOPRE_DESC`) VALUES
-(3, 'Tarro'),
-(4, 'Packs');
 
 -- --------------------------------------------------------
 
@@ -142,13 +109,6 @@ CREATE TABLE `GO_PROVEEDOR` (
   `PR_URL` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Url del proveedor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `GO_PROVEEDOR`
---
-
-INSERT INTO `GO_PROVEEDOR` (`PR_ID`, `PR_NOMBRE`, `PR_ORIGEN`, `PR_SUCURSAL`, `PR_TELEFONO`, `PR_URL`) VALUES
-(19, 'Luis Naranjo', 'Local', 'Montería', '123', '');
-
 -- --------------------------------------------------------
 
 --
@@ -158,16 +118,8 @@ INSERT INTO `GO_PROVEEDOR` (`PR_ID`, `PR_NOMBRE`, `PR_ORIGEN`, `PR_SUCURSAL`, `P
 CREATE TABLE `PEDIDO` (
   `PE_ID` bigint(20) UNSIGNED NOT NULL COMMENT 'PK - Identificador unico',
   `PE_FECHA` varchar(250) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Fecha del pedido',
-  `PE_US_ID` bigint(20) UNSIGNED NOT NULL COMMENT 'FK - Id del usuario que arma el pedido',
-  `PE_EM_ID` bigint(20) UNSIGNED NOT NULL COMMENT 'FK - Id del empleado que hará el domicilio'
+  `CLIENTE` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'CLIENTE QUE PIDE EL DOMICILIO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `PEDIDO`
---
-
-INSERT INTO `PEDIDO` (`PE_ID`, `PE_FECHA`, `PE_US_ID`, `PE_EM_ID`) VALUES
-(1, '2019-12-12', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -187,7 +139,7 @@ CREATE TABLE `USER_AUTH` (
 --
 
 INSERT INTO `USER_AUTH` (`USAU_ID`, `USAU_EMAIL`, `USAU_PASSWORD`, `USAU_USTI_ID`) VALUES
-(1, 'luismigeek@gmail.com', 'luismigeek', 1);
+(1, 'admin@admin.com', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -228,7 +180,7 @@ CREATE TABLE `USUARIO` (
 --
 
 INSERT INTO `USUARIO` (`US_ID`, `US_NOMBRE`, `US_APELLIDO`, `US_TELEFONO`, `US_DIRECCION`, `USAU_ID`) VALUES
-(1, 'Luis', 'Naranjo', '3166201947', 'C. de oro', 1);
+(1, 'nombre', 'apellido', '111111111', 'monteria', 1);
 
 --
 -- Índices para tablas volcadas
@@ -278,9 +230,7 @@ ALTER TABLE `GO_PROVEEDOR`
 -- Indices de la tabla `PEDIDO`
 --
 ALTER TABLE `PEDIDO`
-  ADD PRIMARY KEY (`PE_ID`),
-  ADD KEY `PE_EM_ID` (`PE_EM_ID`),
-  ADD KEY `PE_US_ID` (`PE_US_ID`);
+  ADD PRIMARY KEY (`PE_ID`);
 
 --
 -- Indices de la tabla `USER_AUTH`
@@ -316,31 +266,31 @@ ALTER TABLE `EMPLEADO`
 -- AUTO_INCREMENT de la tabla `GOLOSINA`
 --
 ALTER TABLE `GOLOSINA`
-  MODIFY `GO_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=11;
+  MODIFY `GO_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `GO_CATEGORIAS`
 --
 ALTER TABLE `GO_CATEGORIAS`
-  MODIFY `GOCA_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=12;
+  MODIFY `GOCA_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `GO_PRESENTACIONES`
 --
 ALTER TABLE `GO_PRESENTACIONES`
-  MODIFY `GOPRE_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador único', AUTO_INCREMENT=5;
+  MODIFY `GOPRE_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador único', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `GO_PROVEEDOR`
 --
 ALTER TABLE `GO_PROVEEDOR`
-  MODIFY `PR_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador único', AUTO_INCREMENT=20;
+  MODIFY `PR_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador único', AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `PEDIDO`
 --
 ALTER TABLE `PEDIDO`
-  MODIFY `PE_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=2;
+  MODIFY `PE_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK - Identificador unico', AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `USER_AUTH`
@@ -378,13 +328,6 @@ ALTER TABLE `GOLOSINA`
   ADD CONSTRAINT `GOLOSINA_ibfk_1` FOREIGN KEY (`GO_GOCA_ID`) REFERENCES `GO_CATEGORIAS` (`GOCA_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `GOLOSINA_ibfk_2` FOREIGN KEY (`GO_GOPR_ID`) REFERENCES `GO_PROVEEDOR` (`PR_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `GOLOSINA_ibfk_3` FOREIGN KEY (`GO_GOPRE_ID`) REFERENCES `GO_PRESENTACIONES` (`GOPRE_ID`);
-
---
--- Filtros para la tabla `PEDIDO`
---
-ALTER TABLE `PEDIDO`
-  ADD CONSTRAINT `PEDIDO_ibfk_1` FOREIGN KEY (`PE_EM_ID`) REFERENCES `EMPLEADO` (`EM_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `PEDIDO_ibfk_2` FOREIGN KEY (`PE_US_ID`) REFERENCES `USUARIO` (`US_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `USER_AUTH`

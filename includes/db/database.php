@@ -240,7 +240,7 @@ class Conexion
             $resultado->free();
             return $categorias;
         } else {
-            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
+            echo '<h3 class="text-secundary">No hay categorías registradas.</h3>';
         }
     }
 
@@ -447,7 +447,7 @@ class Conexion
             $resultado->free();
             return $golosinas;
         } else {
-            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
+            echo '<h3 class="text-secundary">Lo sentimos. No hay golosinas registradas.</h3>';
         }
     }
 
@@ -510,7 +510,19 @@ class Conexion
     public function listarPedidos()
     {
         // Realizar una consulta SQL
-        $sql = "SELECT PE.PE_ID AS ID, PE.PE_FECHA AS FECHA, CONCAT( US.US_NOMBRE, ' ', US.US_APELLIDO ) AS CLIENTE, CONCAT( EM.EM_NOMBRE, ' ', EM.EM_APELLIDO ) AS REPARTIDOR, SUM(GO.GO_PRECIO*DP.DEPE_CANTIDAD) AS VALOR FROM PEDIDO PE INNER JOIN USUARIO US ON PE.PE_US_ID = US.US_ID INNER JOIN EMPLEADO EM ON PE.PE_EM_ID = EM.EM_ID INNER JOIN DETALLE_PEDIDO DP ON PE.PE_ID = DP.DEPE_PE_ID INNER JOIN GOLOSINA GO ON DP.DEPE_GO_ID = GO.GO_ID";
+        $sql = "SELECT
+                    PE.PE_ID AS ID,
+                    PE.PE_FECHA AS FECHA,
+                    PE.CLIENTE AS CLIENTE,
+                    SUM(G.GO_PRECIO * DP.DEPE_CANTIDAD) AS VALOR
+                FROM
+                    PEDIDO PE
+                INNER JOIN DETALLE_PEDIDO DP ON
+                    PE.PE_ID = DP.DEPE_PE_ID
+                INNER JOIN GOLOSINA G ON
+                    DP.DEPE_GO_ID = G.GO_ID
+                GROUP BY
+                    PE.PE_ID";
 
         if (!$resultado = $this->conex->query($sql)) {
             echo "Lo sentimos, este sitio web está experimentando problemas.";

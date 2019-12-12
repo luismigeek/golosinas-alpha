@@ -70,7 +70,6 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
                     <th>FECHA</th>
                     <th>VALOR PEDIDO</th>
                     <th>CLIENTE</th>
-                    <th>REPARTIDOR</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -80,7 +79,6 @@ if (!isset($_SESSION["type"]) && $_SESSION["type"] != 1) {
                       <td> <?php echo $pedido['FECHA'] ?> </td>
                       <td> $ <?php echo $pedido['VALOR'] ?> </td>
                       <td> <?php echo $pedido['CLIENTE'] ?> </td>
-                      <td> <?php echo $pedido['REPARTIDOR'] ?> </td>
                     </tr>
                     <?php }?>
                   <?php }?>

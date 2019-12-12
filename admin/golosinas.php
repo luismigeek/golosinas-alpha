@@ -70,6 +70,7 @@
             <?php
                 if ($db->conectar()) {
                   $golosinas = $db->readGolosinas();
+
                   if ($golosinas != null) {
             ?>
 
