@@ -58,6 +58,7 @@ if (!empty($_POST)) {
 
   <!-- Custom fonts for this template-->
   <link href="../librerias/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 

@@ -74,9 +74,11 @@ require_once '../includes/sidebar.php'
             <div class="table-responsive">
 
             <?php 
-              if ($db->conectar()) {
-                $proveedores = $db->readProveedores();
-            ?>
+                  if ($db->conectar()) {
+                    $proveedores = $db->readProveedores();
+
+                    if ($proveedores != null) {
+          ?>
 
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -106,7 +108,8 @@ require_once '../includes/sidebar.php'
                       <a class="btn btn-danger" href="proveedor/delete.php?id=<?php echo $proveedor['PR_ID']?>">Eliminar</a>
                     </td>
                   </tr>
-                <?php }?>
+                  <?php }?>
+                  <?php }?>
                 </tbody>
               </table>
 

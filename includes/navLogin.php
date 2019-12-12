@@ -5,10 +5,6 @@
       Gologinas Alpha
   </a>
 
-  <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-    <i class="fas fa-bars"></i>
-  </button>
-
   <a href="../tienda" class="btn btn-info text-break">
     <span></span>Ir a tienda
   </a>

@@ -82,7 +82,7 @@ class Conexion
 
                 echo "Lo sentimos, este sitio web está experimentando problemas.";
                 exit;
-    
+
                 // Cómo obtener información del error
                 echo "Error: La ejecución de la consulta falló debido a: \n";
                 echo "Query: " . $sql . "<br>";
@@ -120,20 +120,17 @@ class Conexion
             exit;
         }
 
-        if ($resultado->num_rows === 0) {
+        if ($resultado->num_rows != 0) {
+            $proveedores = array();
+            while ($proveedor = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($proveedores, $proveedor);
+            }
+            $resultado->free();
+            return $proveedores;
+        } else {
             echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
-            exit;
         }
 
-        $proveedor = array();
-        // Ahora, sabemos que existe solamente un único resultado en este ejemplo, por lo
-        // que vamos a colocarlo en un array asociativo donde las claves del mismo son los
-        // nombres de las columnas de la tabla
-        while ($row = $resultado->fetch_array(MYSQLI_ASSOC)) {
-            array_push($proveedor, $row);
-        }
-        $resultado->free();
-        return $proveedor;
     }
 
     public function updateProveedor($data = [])
@@ -142,7 +139,7 @@ class Conexion
         // Verifica que el array no esté vacio
         if (count($data) > 0) {
 
-            $url = (!empty($data['e_url'])) ? "https://".$data['e_url'] : null ;
+            $url = (!empty($data['e_url'])) ? "https://" . $data['e_url'] : null;
 
             $sql = "UPDATE
                     GO_PROVEEDOR
@@ -154,7 +151,7 @@ class Conexion
                     PR_URL = '" . $url . "'
                 WHERE GO_PROVEEDOR.PR_ID = " . $data['id'];
 
-                $url = "";
+            $url = "";
 
             if (!$resultado = $this->conex->query($sql)) {
                 echo "Lo sentimos, este sitio web está experimentando problemas.";
@@ -197,7 +194,6 @@ class Conexion
 
     /* Todos los CRUD funcionan de la misma manera, por eso se omite la documentación */
 
- 
     /**********************/
     /* CRUD categorias*/
     /**********************/
@@ -236,19 +232,18 @@ class Conexion
             exit;
         }
 
-        if ($resultado->num_rows === 0) {
+        if ($resultado->num_rows != 0) {
+            $categorias = array();
+            while ($categoria = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($categorias, $categoria);
+            }
+            $resultado->free();
+            return $categorias;
+        } else {
             echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
-            exit;
         }
-
-        $categorias = array();
-        while ($categoria = $resultado->fetch_array(MYSQLI_ASSOC)) {
-            array_push($categorias, $categoria);
-        }
-        $resultado->free();
-        return $categorias;
     }
- 
+
     public function updateCategoria($data = [])
     {
 
@@ -282,6 +277,106 @@ class Conexion
     public function deleteCategoria($id)
     {
         $sql = "DELETE FROM GO_CATEGORIAS WHERE GOCA_ID = $id";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+
+            // Como obtener información del error
+            echo "Error: La ejecución de la consulta falló debido a: \n";
+            echo "Query: " . $sql . "<br>";
+            echo "Errno: " . $this->conex->errno . "<br>";
+            echo "Error: " . $this->conex->error . "<br>";
+            exit;
+        } else {
+            return $resultado;
+        }
+
+    }
+
+    /***********************/
+    /* CRUD presentaciones */
+    /***********************/
+
+    public function createPresentacion($data = [])
+    {
+        if (count($data) > 0) {
+            $sql = "INSERT INTO GO_PRESENTACIONES (GOPRE_ID, GOPRE_DESC)
+                VALUES (NULL, '" . $data['nombre'] . "')";
+
+            if (!$resultado = $this->conex->query($sql)) {
+
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+
+                // Cómo obtener información del error
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "<br>";
+                echo "Errno: " . $this->conex->errno . "<br>";
+                echo "Error: " . $this->conex->error . "<br>";
+                exit;
+            } else {
+                return $resultado;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public function readPresentaciones()
+    {
+        // Realizar una consulta SQL
+        $sql = "SELECT * FROM GO_PRESENTACIONES";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+        }
+
+        if ($resultado->num_rows != 0) {
+            $presentaciones = array();
+            while ($presentacion = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($presentaciones, $presentacion);
+            }
+            $resultado->free();
+            return $presentaciones;
+        } else {
+            echo '<h3 class="text-secundary">Lo sentimos. No se encontraron datos.</h3>';
+        }
+    }
+
+    public function updatePresentacion($data = [])
+    {
+
+        // Verifica que el array no esté vacio
+        if (count($data) > 0) {
+
+            $sql = "UPDATE
+                    GO_PRESENTACIONES
+                SET
+                    GOPRE_DESC = '" . $data['e_nombre'] . "'
+                WHERE GOPRE_ID = " . $data['id'];
+
+            if (!$resultado = $this->conex->query($sql)) {
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+
+                // Como obtener información del error
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "<br>";
+                echo "Errno: " . $this->conex->errno . "<br>";
+                echo "Error: " . $this->conex->error . "<br>";
+                exit;
+            } else {
+                return $resultado;
+            }
+
+        } else {
+            return 0;
+        }
+    }
+
+    public function deletePresentacion($id)
+    {
+        $sql = "DELETE FROM GO_PRESENTACIONES WHERE GOPRE_ID = $id";
 
         if (!$resultado = $this->conex->query($sql)) {
             echo "Lo sentimos, este sitio web está experimentando problemas.";
