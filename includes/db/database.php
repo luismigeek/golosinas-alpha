@@ -562,6 +562,64 @@ class Conexion
             echo '<h3 class="text-secundary">Lo sentimos. No se encontraron pedidos.</h3>';
         }
     }
-    
 
+    /**
+     * CRUD empleados
+     */
+
+    public function createEmpleado($data = []){
+
+        if (count($data) > 0) {
+            $sql = "INSERT INTO empleado (EM_ID, EM_NOMBRE, EM_APELLIDO, EM_TELEFONO, EM_SALARIO) VALUES (NULL, '".$data['nombre']."', '".$data['apellido']."', '".$data['telefono']."', '".$data['salario']."');";
+
+            if (!$resultado = $this->conex->query($sql)) {
+                return null;
+            } else {
+                return $resultado;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public function readEmpleados()
+    {
+        // Realizar una consulta SQL
+        $sql = "SELECT * FROM EMPLEADO";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+        }
+
+        if ($resultado->num_rows != 0) {
+            $empleados = array();
+            while ($empleado = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                array_push($empleados, $empleado);
+            }
+            $resultado->free();
+            return $empleados;
+        } else {
+            echo '<h3 class="text-secundary">No hay categorías registradas.</h3>';
+        }
+    }
+
+    public function deleteEmpleado($id)
+    {
+        $sql = "DELETE FROM EMPLEADO WHERE EM_ID = $id";
+
+        if (!$resultado = $this->conex->query($sql)) {
+            echo "Lo sentimos, este sitio web está experimentando problemas.";
+            exit;
+
+            // Como obtener información del error
+            echo "Error: La ejecución de la consulta falló debido a: \n";
+            echo "Query: " . $sql . "<br>";
+            echo "Errno: " . $this->conex->errno . "<br>";
+            echo "Error: " . $this->conex->error . "<br>";
+            exit;
+        } else {
+            return $resultado;
+        }
+
+    }
 }

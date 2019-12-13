@@ -18,6 +18,7 @@
       <a class="dropdown-item" href="proveedores.php">Ver proveedores</a>
       <a class="dropdown-item" href="presentaciones.php">Ver presentaciones</a>
       <a class="dropdown-item" href="categorias.php">Ver categorias</a>
+      <a class="dropdown-item" href="empleados.php">Ver empleados</a>
     </div>
   </li>
   <li class="nav-item dropdown">
